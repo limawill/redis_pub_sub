@@ -1,0 +1,56 @@
+version: '3.3'
+ 
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+ 
+  server:
+    build:
+      context: ./server
+    container_name: server
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+    stdin_open: true  # Permite entrada no terminal
+    tty: true         # Habilita terminal interativo
+ 
+  slayer1:
+    build:
+      context: ./slayer
+    container_name: slayer1
+    depends_on:
+      - redis
+    environment:
+      - SLAYER_NAME=slayer1
+      - REDIS_HOST=redis
+    stdin_open: true  # Permite entrada no terminal
+    tty: true         # Habilita terminal interativo
+ 
+  slayer2:
+    build:
+      context: ./slayer
+    container_name: slayer2
+    depends_on:
+      - redis
+    environment:
+      - SLAYER_NAME=slayer2
+      - REDIS_HOST=redis
+    stdin_open: true  # Permite entrada no terminal
+    tty: true         # Habilita terminal interativo
+ 
+  slayer3:
+    build:
+      context: ./slayer
+    container_name: slayer3
+    depends_on:
+      - redis
+    environment:
+      - SLAYER_NAME=slayer3
+      - REDIS_HOST=redis
+    stdin_open: true  # Permite entrada no terminal
+    tty: true         # Habilita terminal interativo
+ 
